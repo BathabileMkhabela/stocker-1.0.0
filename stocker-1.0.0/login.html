@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url("./img/carousel-1.jpg") no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+        }
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .login-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #198754;
+        }
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+        }
+        .btn-primary {
+            background-color: #198754;
+            border: none;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #198754;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .input-group-text {
+            background-color:#198754;
+            color: white;
+            border: none;
+        }
+        .icon-style {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2 class="login-title">Login</h2>
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="userType" class="form-label">Select User Type</label>
+                <select class="form-select" id="userType" required>
+                    <option value="applicant">Applicant</option>
+                    <option value="non-stakeholder">Non-stakeholder</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div id="applicantFields" class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa-solid fa-tachometer-alt"></i></span>
+                <input type="text" class="form-control" id="meterNumber" placeholder="Meter Number" required>
+            </div>
+            <div id="nonStakeholderFields" class="mb-3 input-group d-none">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <input type="text" class="form-control" id="userName" placeholder="Username" required>
+            </div>
+            <div id="adminFields" class="mb-3 input-group d-none">
+                <span class="input-group-text"><i class="fa-solid fa-id-badge"></i></span>
+                <input type="text" class="form-control" id="staffNumber" placeholder="Staff Number" required>
+            </div>
+            <div class="mb-3 input-group">
+                <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                <input type="password" class="form-control" id="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="d-flex justify-content-between mt-3">
+                <button onclick="goBack()" class="btn btn-secondary">Back</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Copyright Section -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-body"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>ENERGY</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-body">
+                    Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML codex</a> Distributed By <a class="border-bottom text-white" href="https://themewagon.com">Electrified-Embedded</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById("userType").addEventListener("change", function() {
+            const userType = this.value;
+            document.getElementById("applicantFields").classList.toggle("d-none", userType !== "applicant");
+            document.getElementById("nonStakeholderFields").classList.toggle("d-none", userType !== "non-stakeholder");
+            document.getElementById("adminFields").classList.toggle("d-none", userType !== "admin");
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const userType = document.getElementById("userType").value;
+            const password = document.getElementById("password").value;
+        
+            if (userType === "applicant") {
+                const meterNumber = document.getElementById("meterNumber").value;
+                if (meterNumber && password) {
+                    alert("Applicant login successful!");
+                    window.location.href = "ApplicantDashboard"; // Update the path if needed
+                } else {
+                    alert("Please enter a valid meter number and password.");
+                }
+            } else if (userType === "non-stakeholder") {
+                const userName = document.getElementById("userName").value;
+                if (userName && password) {
+                    alert("Non-stakeholder login successful!");
+                    window.location.href = "./NonStakeholderDashboard.html"; // Update the path if needed
+                } else {
+                    alert("Please enter a valid username and password.");
+                }
+            } else if (userType === "admin") {
+                const staffNumber = document.getElementById("staffNumber").value;
+                if (staffNumber && password) {
+                    alert("Admin login successful!");
+                    window.location.href = "./AdminDashboard.html"; // Update the path if needed
+                } else {
+                    alert("Please enter a valid staff number and password.");
+                }
+            }
+        });
+        
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
